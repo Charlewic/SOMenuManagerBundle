@@ -1,0 +1,8 @@
+{
+    "name": "so/menu-manager-bundle",
+    "autoload": {
+        "psr-4" : {
+            "SO\\MenuManagerBundle\\" : "SO/MenuManagerBundle"
+        }
+    }
+}
