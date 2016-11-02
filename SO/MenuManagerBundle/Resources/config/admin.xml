@@ -1,0 +1,19 @@
+<!-- SO/ProjectBundle/Resources/config/admin.xml -->
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="sonata.admin.menu" class="SO\MenuManagerBundle\Admin\MenuAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Menu" label="Menu"/>
+            <argument />
+            <argument>SO\MenuManagerBundle\Entity\Menu</argument>
+            <argument />
+        </service>
+        <service id="sonata.admin.menuItem" class="SO\MenuManagerBundle\Admin\MenuItemAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Menu" label="Liens de menu"/>
+            <argument />
+            <argument>SO\MenuManagerBundle\Entity\MenuItem</argument>
+            <argument />
+        </service>
+    </services>
+</container>
