@@ -3,12 +3,15 @@
 namespace SO\MenuManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Menu
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("computedName")
  */
 class Menu
 {
@@ -27,6 +30,18 @@ class Menu
      * @ORM\Column(name="Name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ComputedName", type="string", length=50, unique=true)
+     * @Assert\Regex(
+     *     pattern="/^[0-9A-Za-z\-\_]*$/",
+     *     message="L'identifiant ne doit contenir que des caractères alphanumérique à l'exception du tiret '-' et de l'underscore '_'"
+     * )
+     * @Assert\NotNull()
+     */
+    private $computedName;
 
     /**
      * @ORM\OneToMany(targetEntity="\SO\MenuManagerBundle\Entity\MenuItem", mappedBy="menu", cascade={"persist", "remove"}, orphanRemoval=true)
@@ -113,5 +128,29 @@ class Menu
     public function getMenuItems()
     {
         return $this->menuItems;
+    }
+
+    /**
+     * Set computedName
+     *
+     * @param string $computedName
+     *
+     * @return Menu
+     */
+    public function setComputedName($computedName)
+    {
+        $this->computedName = $computedName;
+
+        return $this;
+    }
+
+    /**
+     * Get computedName
+     *
+     * @return string
+     */
+    public function getComputedName()
+    {
+        return $this->computedName;
     }
 }

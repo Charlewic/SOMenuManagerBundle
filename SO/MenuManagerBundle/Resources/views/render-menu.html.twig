@@ -1,0 +1,28 @@
+{% if app.request.attributes.get('_route_params') != null %}
+    {% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+    {% set basePathTmp = currentPath|split('?') %}
+    {% set baseCurrentPath = basePathTmp[0] %}
+{% else %}
+    {% set baseCurrentPath = "/" %}
+{% endif %}
+{% for menuItem in menu.menuItems if menuItem.menuItemParent is null %}
+    {% set isSelected = (baseCurrentPath == menuItem.url) %}
+    {% for menuItemChild in menuItem.menuChildren %}
+        {% set isSelected = (baseCurrentPath == menuItemChild.url) or isSelected %}
+    {% endfor %}
+    <div class="menu-item {{ isSelected ? 'selected' : '' }}">
+        <a href="/{{ menuItem.url }}" target="{{ menuItem.target }}"><div class="menu-link ">{{ menuItem.name }}</div></a>
+        {% if menuItem.menuChildren is not empty %}
+            <div class="menu-child-container">
+                <div class="background-child-container"></div>
+                <div class="child-vertical-container">
+                    {% for menuItemChild in menuItem.menuChildren %}
+                        {% set isChildSelected = (baseCurrentPath == menuItemChild.url) %}
+                        <a href="/{{ menuItemChild.url }}" target="{{ menuItemChild.target }}"><div class="child-menu-link {{ isChildSelected ? 'selected' : '' }}">{{ menuItemChild.name }}</div></a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}

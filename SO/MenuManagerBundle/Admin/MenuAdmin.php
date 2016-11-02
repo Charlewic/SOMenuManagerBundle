@@ -19,6 +19,12 @@ class MenuAdmin extends Admin
                     'required' => true,
                 )
             )
+            ->add('computedName', 'text', array(
+                    'label' => 'Identifiant du menu (admin)',
+                    'required' => true,
+                    'sonata_help' => "L'identifiant ne doit contenir que des caractères alphanumérique à l'exception du tiret '-' et de l'underscore '_'",
+                )
+            )
             ->add('menuItems', 'sonata_type_collection', array(), array(
                     'label' => 'Liste des liens du menu',
                     'edit' => 'inline',
