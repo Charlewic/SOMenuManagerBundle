@@ -3,6 +3,7 @@
 namespace SO\MenuManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\MediaBundle\Model\Media;
 
 /**
  * MenuItem
@@ -68,6 +69,16 @@ class MenuItem
      * })
      */
     private $menuItemParent;
+
+    /**
+     * @var Media
+     *
+     * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="menu_item_media_id", referencedColumnName="id")
+     * })
+     */
+    private $menuItemMedia;
 
     /**
      *
@@ -274,5 +285,29 @@ class MenuItem
     public function getMenuChildren()
     {
         return $this->menuChildren;
+    }
+
+    /**
+     * Set menuItemMedia
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $menuItemMedia
+     *
+     * @return MenuItem
+     */
+    public function setMenuItemMedia(\Application\Sonata\MediaBundle\Entity\Media $menuItemMedia = null)
+    {
+        $this->menuItemMedia = $menuItemMedia;
+
+        return $this;
+    }
+
+    /**
+     * Get menuItemMedia
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media
+     */
+    public function getMenuItemMedia()
+    {
+        return $this->menuItemMedia;
     }
 }

@@ -25,16 +25,21 @@ class MenuItemAdmin extends Admin
             )
             ->add('target', 'choice', array(
                     'label' => 'Cible du lien',
-                    'choices'   => array('_self' => 'Même fenêtre', '_blank' => 'Nouvelle fenêtre'),
-                    'required'  => true,
+                    'choices' => array('_self' => 'Même fenêtre', '_blank' => 'Nouvelle fenêtre'),
+                    'required' => true,
                 )
             )
             ->add('menuItemParent', null, array(
                     'label' => 'Lien parent',
-                    'required'  => false,
+                    'required' => false,
                 )
             )
-        ;
+            ->add('menuItemMedia', 'sonata_type_model_list', array(
+                'label' => 'Media associé au lien',
+                'required' => false,
+            ),
+                array('link_parameters' => array('context' => 'default'))
+            );
     }
 
     // Fields to be shown on filter forms
@@ -43,8 +48,7 @@ class MenuItemAdmin extends Admin
         $datagridMapper
             ->add('name')
             ->add('url')
-            ->add('target')
-        ;
+            ->add('target');
     }
 
     // Fields to be shown on lists
@@ -53,7 +57,6 @@ class MenuItemAdmin extends Admin
         $listMapper
             ->addIdentifier('name')
             ->add('url')
-            ->add('target')
-        ;
+            ->add('target');
     }
 }
