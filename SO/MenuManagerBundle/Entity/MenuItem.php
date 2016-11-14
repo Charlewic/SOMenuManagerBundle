@@ -65,7 +65,7 @@ class MenuItem
      *
      * @ORM\ManyToOne(targetEntity="\SO\MenuManagerBundle\Entity\MenuItem")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="menu_item_parent_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="menu_item_parent_id", referencedColumnName="id", onDelete="SET NULL")
      * })
      */
     private $menuItemParent;
@@ -75,7 +75,7 @@ class MenuItem
      *
      * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Media")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="menu_item_media_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="menu_item_media_id", referencedColumnName="id", onDelete="SET NULL")
      * })
      */
     private $menuItemMedia;
