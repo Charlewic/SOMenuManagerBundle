@@ -3,6 +3,8 @@
 namespace SO\MenuManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 use Sonata\MediaBundle\Model\Media;
 
 /**
@@ -10,6 +12,7 @@ use Sonata\MediaBundle\Model\Media;
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @Gedmo\TranslationEntity(class="SO\MenuManagerBundle\Entity\MenuItemTranslation")
  */
 class MenuItem
 {
@@ -26,6 +29,7 @@ class MenuItem
      * @var string
      *
      * @ORM\Column(name="Name", type="string", length=255)
+     * @Gedmo\Translatable
      */
     private $name;
 
@@ -40,6 +44,7 @@ class MenuItem
      * @var string
      *
      * @ORM\Column(name="Url", type="string", length=255)
+     * @Gedmo\Translatable
      */
     private $url;
 
@@ -86,10 +91,29 @@ class MenuItem
      */
     private $menuChildren;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="\SO\MenuManagerBundle\Entity\MenuItemTranslation", mappedBy="object", cascade={"persist", "remove"})
+     */
+    protected $translations;
+
 
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    public function addTranslation(MenuItemTranslation $t)
+    {
+        if (!$this->translations->contains($t)) {
+            $this->translations[] = $t;
+            $t->setObject($this);
+        }
     }
 
     /**
