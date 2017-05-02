@@ -11,6 +11,11 @@ class MenuItemAdmin extends Admin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
+        if ($this->getRoot()->getClass() != "SO\MenuManagerBundle\Entity\Menu") {
+            $formMapper
+                ->add('menu');
+        }
+
         $formMapper
             ->add('weight')
             ->add('name', 'translatable_field', array(

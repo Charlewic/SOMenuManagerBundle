@@ -275,6 +275,7 @@ class MenuItem
     public function __construct()
     {
         $this->menuChildren = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
