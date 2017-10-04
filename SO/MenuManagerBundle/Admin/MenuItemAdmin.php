@@ -17,29 +17,60 @@ class MenuItemAdmin extends Admin
         }
 
         $formMapper
-            ->add('weight')
-            ->add('name', 'translatable_field', array(
+            ->add('weight');
+
+        if ($this->id($this->getSubject())) {
+            $formMapper
+                ->add('name', 'translatable_field', array(
+                        'label' => 'Titre du lien',
+                        'required' => true,
+                        'field' => 'name',
+                        'attr' => array(
+                            'data-translatable-tab-field' => 1,
+                        ),
+                        'personal_translation' => 'SO\MenuManagerBundle\Entity\MenuItemTranslation',
+                        'property_path' => 'translations',
+                    )
+                )
+                ->add('url', 'translatable_field', array(
+                        'label' => 'Url du lien',
+                        'required' => true,
+                        'field' => 'url',
+                        'attr' => array(
+                            'data-translatable-tab-field' => 1,
+                        ),
+                        'personal_translation' => 'SO\MenuManagerBundle\Entity\MenuItemTranslation',
+                        'property_path' => 'translations',
+                    )
+                );
+        }
+        else {
+            $formMapper
+                ->add('name', 'translatable_field', array(
                     'label' => 'Titre du lien',
-                    'required' => true,
+                    'required' => false,
                     'field' => 'name',
-                    'attr' => array(
-                        'data-translatable-tab-field' => 1,
-                    ),
                     'personal_translation' => 'SO\MenuManagerBundle\Entity\MenuItemTranslation',
                     'property_path' => 'translations',
-                )
-            )
-            ->add('url', 'translatable_field', array(
-                    'label' => 'Url du lien',
-                    'required' => true,
-                    'field' => 'url',
                     'attr' => array(
                         'data-translatable-tab-field' => 1,
+                        'style' => 'display: none;',
                     ),
-                    'personal_translation' => 'SO\MenuManagerBundle\Entity\MenuItemTranslation',
-                    'property_path' => 'translations',
-                )
-            )
+                ))
+                ->add('url', 'translatable_field', array(
+                        'label' => 'Url du lien',
+                        'required' => false,
+                        'field' => 'url',
+                        'personal_translation' => 'SO\MenuManagerBundle\Entity\MenuItemTranslation',
+                        'property_path' => 'translations',
+                        'attr' => array(
+                            'data-translatable-tab-field' => 1,
+                            'style' => 'display: none;',
+                        ),
+                    )
+                );
+        }
+        $formMapper
             ->add('target', 'choice', array(
                     'label' => 'Cible du lien',
                     'choices' => array('_self' => 'Même fenêtre', '_blank' => 'Nouvelle fenêtre'),
